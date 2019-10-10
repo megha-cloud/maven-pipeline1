@@ -1,14 +1,20 @@
 pipeline {
     agent any
     stages {
-        stage('build && SonarQube analysis') {
+        stage('build') {
             steps {
                 sh 'mvn clean package sonar:sonar'
             }
         }
-        stage("Quality Gate") {
+        stage ("SonarQube analysis") {
             steps {
-                waitForQualityGate abortPipeline: true
+                withSonarQubeEnv('SonarQube') {
+                    sh "../../../sonar-scanner-2.9.0.670/bin/sonar-scanner"   
+                }
+                def qualitygate = waitForQualityGate()
+                if (qualitygate.status != "OK") {
+                    error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+                }
             }
         }
     }
