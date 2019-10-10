@@ -1,17 +1,24 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
+        
+        stage('build && SonarQube analysis') {
             steps {
-                sh 'mvn clean package sonar:sonar'
+                withSonarQubeEnv('My SonarQube Server') {
+                    // Optionally use a Maven environment you've configured already
+                    
+                        sh 'mvn clean package sonar:sonar'
+             
+                }
             }
         }
-        stage ("SonarQube analysis") {
+        stage("Quality Gate") {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh "../../../sonar-scanner-2.9.0.670/bin/sonar-scanner"   
+                timeout(time: 1, unit: 'HOURS') {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
+                    waitForQualityGate abortPipeline: true
                 }
-                waitForQualityGate abortPipeline: true
             }
         }
     }
