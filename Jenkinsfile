@@ -10,17 +10,19 @@ pipeline {
             }
         }
 
-        stage ('MavenBuild') {
+        stage('build && SonarQube analysis') {
             steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+                withSonarQubeEnv('My SonarQube Server') {
+                    sh 'mvn clean package sonar:sonar'
+                }
             }
         }
-        stage('SonarqubeScan') {
+        
+        stage("Quality Gate") {
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh "/home/devops20sep4/sonarqube-7.0/bin/sonar-scanner"
-                }
-                timeout(time: 10, unit: 'MINUTES') {
+                timeout(time: 1, unit: 'HOURS') {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
                     waitForQualityGate abortPipeline: true
                 }
             }
