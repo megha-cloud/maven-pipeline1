@@ -4,8 +4,8 @@ pipeline {
         sonarqube {
             properties {
                 property "sonar.host.url", http://52.247.4.47:9000 
-                property "sonar.projectName", "pipeline demo 1"   //  this name will appear in dashboard
-                property "sonar.projectKey", "pipeline demo 1" // It sould be a keybased on this report is created
+                property "sonar.projectName", "pipeline demo 1"  
+                property "sonar.projectKey", "pipeline demo 1" 
             }
         }
         stage('build && SonarQube analysis') {
