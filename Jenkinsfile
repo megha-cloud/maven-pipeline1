@@ -4,12 +4,7 @@ pipeline {
         stage('build && SonarQube analysis') {
             steps {
                 withSonarQubeEnv{
-                    properties {
-                        property "sonar.host.url", "http://52.247.4.47:9000" 
-                        property "sonar.projectName", "pipeline demo 1"  
-                        property "sonar.projectKey", "pipeline demo 1" 
-                    }
-                    sh 'mvn clean package sonar:sonar'
+                    sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://52.247.4.47:9000 -Dsonar.projectKey="pipeline demo 1" -Dsonar.sources=. -Dsonar.tests=. '
                 }
             }
         }
