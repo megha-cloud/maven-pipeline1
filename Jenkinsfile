@@ -3,7 +3,7 @@ pipeline {
     stages {
         sonarqube {
             properties {
-                property "sonar.host.url", http://52.247.4.47:9000 
+                property "sonar.host.url", "http://52.247.4.47:9000" 
                 property "sonar.projectName", "pipeline demo 1"  
                 property "sonar.projectKey", "pipeline demo 1" 
             }
