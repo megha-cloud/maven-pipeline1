@@ -23,7 +23,7 @@ pipeline {
                  sh 'mvn clean package'
             }
         }
-        stage('Artifactory Upload')
+        stage('Artifactory Upload'){
             steps {
                 rtUpload (
                     serverId: 'Artifactoty 6.13',
