@@ -10,12 +10,12 @@ pipeline {
         }
         stage('Junit with JOCOCO') {
             steps {
-                jacoco( 
+                step([$class: 'JacocoPublisher', 
                     execPattern: 'target/*.exec',
                     classPattern: 'target/classes',
-                    sourcePattern: 'java/com/devops/practice',
-                    exclusionPattern: 'java/com/devops/practice/test*'
-                )
+                    sourcePattern: 'src/main/java',
+                    exclusionPattern: 'src/test*'
+                ])
             }
         }
         stage('Maven Build') {
