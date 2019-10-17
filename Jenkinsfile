@@ -25,16 +25,9 @@ pipeline {
         }
         stage('Artifactory Upload'){
             steps {
-                rtUpload (
-                    serverId: 'Artifactoty 6.13',
-                    spec: '''{
-                        "files": [
-                         {
-                            "pattern": "/var/lib/workspace/pipelineDemo1/target/maven-git-test*.jar",
-                            "target": "jenkins-maven-project-snapshot/"
-                         }
-                        ]
-                    }''', failNoOp: true
+                rtMavenRun (
+                    goals: 'clean install',
+                    snapshotRepo: "jenkins-maven-project-snapshot"
                 )
             }
         }
