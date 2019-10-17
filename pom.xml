@@ -5,6 +5,10 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>maven-git-test</name>
   
+  <properties>
+    <build.number>SNAPSHOT</build.number>
+  </properties>
+  
   <dependencies>
     <dependency>
         <groupId>junit</groupId>
@@ -17,5 +21,26 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
+  
+  <build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+                <manifest>
+                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                </manifest>
+                <archive>
+                    <manifestEntries>
+                        <Specification-Title>${project.name}</Specification-Title>
+                        <Specification-Version>${project.version}</Specification-Version>
+                        <Implementation-Version>${build.number}</Implementation-Version>
+                    </manifestEntries>
+                </archive>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
   
 </project>
