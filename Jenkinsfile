@@ -26,11 +26,11 @@ pipeline {
         stage('Artifactory Upload'){
             steps {
                 rtUpload (
-                    serverId: 'Artifactoty 6.13',
+                    serverId: 'ARTIFACTORY_SERVER_6',
                     spec: '''{
                         "files": [
                          {
-                            "pattern": "/workspace/pipelineDemo1/target/maven-git-test*.jar",
+                            "pattern": "/var/lib/workspace/pipelineDemo1/target/maven-git-test*.jar",
                             "target": "jenkins-maven-project-snapshot/"
                          }
                         ]
