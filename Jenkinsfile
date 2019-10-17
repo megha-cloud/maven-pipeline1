@@ -4,7 +4,7 @@ pipeline {
         stage('SonarQube Report') {
             steps {
                 withSonarQubeEnv('SonarQube7'){
-                    sh 'mvn clean sonar:sonar -Dsonar.host.url=http://52.179.214.135:9000 -Dsonar.projectKey="pipelineDemo1" -Dsonar.sources=. -Dsonar.java.binaries=.'
+                    sh 'mvn clean sonar:sonar -Dsonar.host.url=http://52.177.133.129:9000 -Dsonar.projectKey="pipelineDemo1" -Dsonar.sources=. -Dsonar.java.binaries=.'
                 }
             }
         }
@@ -25,10 +25,16 @@ pipeline {
         }
         stage('Artifactory Upload'){
             steps {
-                rtMavenRun (
-                    serverId: "Artifactoty 6.13",
-                    goals: 'clean install',
-                    snapshotRepo: "jenkins-maven-project-snapshot"
+                rtUpload (
+                    serverId: 'Artifactoty 6.13',
+                    spec: '''{
+                        "files": [
+                         {
+                            "pattern": "/var/lib/jenkins/workspace/pipelineDemo1/target/maven-git-test*.jar",
+                            "target": "jenkins-maven-project-snapshot/"
+                         }
+                        ]
+                    }''', failNoOp: true
                 )
             }
         }
