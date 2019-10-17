@@ -34,8 +34,7 @@ pipeline {
                             "target": "jenkins-maven-project-snapshot/"
                          }
                         ]
-                    }'''
-                    server.upload spec: uploadSpec, failNoOp: true
+                    }''', failNoOp: true
                 )
             }
         }
