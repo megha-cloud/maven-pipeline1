@@ -1,4 +1,4 @@
-package com.devops.practice.test;
+package com.devops.practice;
 
 import org.junit.Test;
 
