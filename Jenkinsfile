@@ -4,7 +4,7 @@ pipeline {
         stage('SonarQube Report') {
             steps {
                 withSonarQubeEnv('SonarQube7'){
-                    sh 'mvn clean sonar:sonar -Dsonar.host.url=http://137.116.53.119:9000 -Dsonar.projectKey="pipelineDemo1" -Dsonar.sources=src/main/java -Dsonar.java.binaries=.'
+                    sh 'mvn clean sonar:sonar -Dsonar.host.url=http://40.123.34.171:9000 -Dsonar.projectKey="pipelineDemo1" -Dsonar.sources=src/main/java -Dsonar.java.binaries=.'
                 }
             }
         }
@@ -13,8 +13,8 @@ pipeline {
                 step([$class: 'JacocoPublisher', 
                     execPattern: 'target/*.exec',
                     classPattern: 'target/classes',
-                    sourcePattern: 'src/main/java',
-                    exclusionPattern: 'src/test*'
+                    sourcePattern: 'src/main/java/com/devops/practice/*',
+                    exclusionPattern: 'src/test/java/com/devops/practice/*'
                 ])
             }
         }
