@@ -41,7 +41,7 @@ pipeline {
         stage('Building Docker Image'){
             steps{
                 script{
-                    docker.withRegistry('https://registry.hub.docker.com','dockerHub'){
+                    docker.withRegistry('https://registry.hub.docker.com','dockerhub'){
                         myImage=docker.build("megha8docker/maven-project-demo")
                         myImage.push()
                     }    
